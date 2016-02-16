@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, url_for
 import redis
-from urllib import quote_plus
+from urllib import quote_plus, unquote
 
 app = Flask(__name__)
 
@@ -21,7 +21,6 @@ def new_link():
         return redirect(url_for('static', filename='new.html'))
 
     f = quote_plus(f)
-    t = quote_plus(t)
 
     print "I found:", r.get(f)
     if (r.get(f) != None):
@@ -34,12 +33,12 @@ def new_link():
 
 @app.route('/<l>')
 def link(l=None):
-    page = r.get(l)
+    page = r.get(quote_plus(l))
 
     if page == None:
         return redirect('/')
     
-    return redirect(page)
+    return redirect(unquote(page))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
