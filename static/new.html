@@ -1,14 +1,20 @@
 <html>
 <head>
   <title>Create New Link</title>
+  <link rel="stylesheet" href="site.css" >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <h1>Create New Link</h1>
-  <form method="get" action="/new">
-    delt.space/<input type="text" placeholder="foobar" name="from" > <br />
-    http://<input type="text" placeholder="example.com" name="to" >
-    <input type="submit" value="Create" >
-  </form>
+  <div class="main">
+    <form method="get" action="/new">
+      <span class="from-lbl">delt.space/</span>
+      <input type="text" placeholder="foobar" name="from" class="from"> <br />
+      <span class="to-lbl">http://</span>
+      <input type="text" placeholder="example.com" name="to" class="to">
+      <input type="submit" value="Create" class="submit">
+    </form>
+  </div>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
