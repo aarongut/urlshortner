@@ -26,6 +26,7 @@ def new_link():
     if (r.get(f) != None):
         return redirect(url_for('static', filename='error.html'))
 
+    t = t.split("https://")[-1].split("http://")[-1]
     r.set(quote_plus(f), 'http://' + quote_plus(t))
 
     url = url_for('link', l=f)
