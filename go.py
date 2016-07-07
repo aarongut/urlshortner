@@ -1,6 +1,8 @@
 from flask import Flask, request, redirect, url_for
 import redis
 from urllib import quote_plus, unquote
+import logging
+from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
 
@@ -22,7 +24,6 @@ def new_link():
 
     f = quote_plus(f)
 
-    print "I found:", r.get(f)
     if (r.get(f) != None):
         return redirect(url_for('static', filename='error.html'))
 
@@ -30,6 +31,7 @@ def new_link():
     r.set(quote_plus(f), 'http://' + quote_plus(t))
 
     url = url_for('link', l=f)
+    app.logger.info('NEW: ' + url + ' -> ' + t)
     return '<html><body><a href="' + url + '">http://delt.space' + url + '</a>'
 
 @app.route('/<l>')
@@ -39,7 +41,11 @@ def link(l=None):
     if page == None:
         return redirect('/')
     
+    app.logger.info('GET: ' + l + ' -> ' + unquote(page))
     return redirect(unquote(page))
 
 if __name__ == '__main__':
+    handler = RotatingFileHandler('go.log', maxBytes=10000, backupCount=1)
+    handler.setLevel(logging.INFO)
+    app.logger.addHandler(handler)
     app.run(host='0.0.0.0', port=8080)
