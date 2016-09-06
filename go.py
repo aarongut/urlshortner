@@ -39,6 +39,9 @@ def link(l=None):
     page = r.get(quote_plus(l))
 
     if page == None:
+        if l[-1] == 's' and r.get(l[:-1]):
+            app.logger.info('PORN: ' + l + ' -> https://pornhub.com')
+            return redirect('https://pornhub.com')
         return redirect('/')
     
     app.logger.info('GET: ' + l + ' -> ' + unquote(page))
