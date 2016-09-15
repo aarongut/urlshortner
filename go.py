@@ -40,8 +40,8 @@ def link(l=None):
 
     if page == None:
         if l[-1] == 's' and r.get(l[:-1]):
-            app.logger.info('PORN: ' + l + ' -> https://pornhub.com')
-            return redirect('https://pornhub.com')
+            app.logger.info('RICK: ' + l + ' -> https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+            return redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
         return redirect('/')
     
     app.logger.info('GET: ' + l + ' -> ' + unquote(page))
