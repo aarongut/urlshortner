@@ -19,7 +19,7 @@ def new_link():
     f = request.args.get('from', None)
     t = request.args.get('to', None)
 
-    if (f == None or t == None):
+    if (f == None or t == None or f == "" or t == ""):
         return redirect(url_for('static', filename='new.html'))
 
     f = quote_plus(f)
@@ -27,8 +27,12 @@ def new_link():
     if (r.get(f) != None):
         return redirect(url_for('static', filename='error.html'))
 
-    t = t.split("https://")[-1].split("http://")[-1]
-    r.set(quote_plus(f), 'http://' + quote_plus(t))
+    ssl = t[:5].lower() == 'https'
+
+    t = t.split('https://')[-1].split('http://')[-1]
+
+    protocol = 'https://' if ssl else 'http://'
+    r.set(quote_plus(f), protocol + quote_plus(t))
 
     url = url_for('link', l=f)
     app.logger.info('NEW: ' + url + ' -> ' + t)
@@ -43,7 +47,7 @@ def link(l=None):
             app.logger.info('RICK: ' + l + ' -> https://www.youtube.com/watch?v=dQw4w9WgXcQ')
             return redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
         return redirect('/')
-    
+
     app.logger.info('GET: ' + l + ' -> ' + unquote(page))
     return redirect(unquote(page))
 
