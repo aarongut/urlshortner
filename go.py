@@ -3,6 +3,8 @@ import redis
 from urllib import quote_plus, unquote
 import logging
 from logging.handlers import RotatingFileHandler
+from key import secret
+import requests
 
 app = Flask(__name__)
 
@@ -26,6 +28,21 @@ def new_link():
 
     if (r.get(f) != None):
         return redirect(url_for('static', filename='error.html'))
+
+    data = {
+        'secret': secret,
+        'response': request.args.get('g-recaptcha-response'),
+        'remoteip': request.environ.get('REMOTE_ADDR'),
+    }
+
+
+    verify = requests.get('https://www.google.com/recaptcha/api/siteverify',
+                          params=data)
+
+    if not (verify.status_code == 200 and verify.json()['success']):
+        app.logger.info('SPAM: ' + request.environ.get('REMOTE_ADDR'))
+        return redirect(url_for('static', filename='spam.html'))
+
 
     ssl = t[:5].lower() == 'https'
 

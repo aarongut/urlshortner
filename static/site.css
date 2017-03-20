@@ -17,7 +17,7 @@ div.main {
 
 form {
 	margin: auto;
-	width: 280px;
+	width: 302px;
 	border: 1px solid #7f1bd1;
 	border-radius: 4px;
 }
@@ -42,7 +42,7 @@ input.from {
 	height: 24px;
 	margin: 0px 0px 0px -4px;
 	border: none;
-	width: 200px;
+	width: 222px;
 }
 
 
@@ -51,11 +51,11 @@ input.to {
 	height: 24px;
 	margin: 0px 0px 0px -4px;
 	border: none;
-	width: 200px;
+	width: 222px;
 }
 
 input.submit {
-	width: 280px;
+	width: 302px;
 	height: 24px;
 	border-radius: 0px 0px 4px 4px;
 	border: none;

@@ -1,3 +1,4 @@
 *.pyc
 dump.rdb
 go.log
+key.py
